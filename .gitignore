@@ -7,5 +7,5 @@
 /typings/*
 
 # Ignore distribution files
-/app
-/app/*
+/public
+/public/*
