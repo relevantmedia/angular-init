@@ -6,17 +6,17 @@ var rename = require('gulp-rename');
 var browserSync = require('browser-sync').create();
 
 var defaultAssets = {
-  components:{
+  app:{
     sass:[
-      './components/styles/*.scss',
-      './components/**/styles/*.scss'
+      './app/styles/*.scss',
+      './app/**/styles/*.scss'
     ],
     views:[
-      './components/**/views/*.html'
+      './app/**/views/*.html'
     ],
     ts:[
-      './components/*.ts',
-      './components/**/*.ts'
+      './app/*.ts',
+      './app/**/*.ts'
     ]
   }
 };
@@ -29,9 +29,9 @@ gulp.task('browser-sync', function() {
         }
     });
     gulp.watch('./index.html').on('change', browserSync.reload);
-    gulp.watch(defaultAssets.components.sass, ['sass']);
-    gulp.watch(defaultAssets.components.views).on('change', browserSync.reload);
-    gulp.watch(defaultAssets.components.ts, ['tsc']).on('change', browserSync.reload);
+    gulp.watch(defaultAssets.app.sass, ['sass']);
+    gulp.watch(defaultAssets.app.views).on('change', browserSync.reload);
+    gulp.watch(defaultAssets.app.ts, ['tsc']).on('change', browserSync.reload);
 });
 
 // Set NODE_ENV to 'development'
@@ -40,14 +40,14 @@ gulp.task('env:dev', function () {
 });
 
 gulp.task('sass', function () {
-  gulp.src(defaultAssets.components.sass)
+  gulp.src(defaultAssets.app.sass)
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(gulp.dest('./app'));
+    .pipe(gulp.dest('./public'));
 });
 
 gulp.task('html', function() {
-  return gulp.src(defaultAssets.components.views)
-    .pipe(gulp.dest('./app'))
+  return gulp.src(defaultAssets.app.views)
+    .pipe(gulp.dest('./public'))
 });
 
 // Typescript task
@@ -58,9 +58,9 @@ gulp.task('tsc', function () {
 
   return tsResult.js
   .pipe(rename(function (path) {
-    path.dirname = path.dirname.replace('components', '');
+    path.dirname = path.dirname.replace('app', '');
   }))
-  .pipe(gulp.dest('app'));
+  .pipe(gulp.dest('public'));
 });
 
 // Lint CSS and JavaScript files.
