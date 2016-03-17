@@ -1,7 +1,7 @@
 {
   "port": 3000,
   "injectChanges": false,
-  "files": ["./dist/**/*.{html,htm,css,js}"],
+  "files": ["./public/**/*.{html,htm,css,js}"],
   "server": {
     "baseDir": "./",
   }
